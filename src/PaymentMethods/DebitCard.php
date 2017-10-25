@@ -4,13 +4,14 @@ use Illuminate\Http\Request;
 use TourChannel\Payments\Service\RequestConnect;
 
 /**
- * Class CreditCard
+ * Método de pagamento com cartão de débito
+ * Class DebitCard
  * @package TourChannel\Payments\PaymentMethods
  */
-class CreditCard
+class DebitCard
 {
     /** PATH da URl na API */
-    const _PATH = '/pay/card';
+    const _PATH = '/pay/debit_card';
 
     /**
      * Formatado do array que ira para API
@@ -19,16 +20,14 @@ class CreditCard
     protected $payload = [
         'order' => '',
         'amount' => 0,
-        'cards' => [[
-            'installments' => 0,
-            'card' => [
-                'number' => '',
-                'holderName' => '',
-                'expirationMonth' => 0,
-                'expirationYear' => 0,
-                'cvv' => ''
-            ]
-        ]], 'customer' => [ 'name' => '', 'email' => '' ]
+        'debitCard' => [
+            'number' => '',
+            'holderName' => '',
+            'expirationMonth' => 0,
+            'expirationYear' => 0,
+            'cvv' => '',
+            'returnUrl' => ''
+        ], 'customer' => [ 'name' => '', 'email' => '' ]
     ];
 
     /**
@@ -56,25 +55,13 @@ class CreditCard
     }
 
     /**
-     * Numero de parcelas
-     * @param $count
-     * @return $this
-     */
-    public function setInstallmentsCount($count)
-    {
-        $this->payload['cards'][0]['installments'] = $count;
-
-        return $this;
-    }
-
-    /**
-     * Número do cartão de crédito
+     * Número do cartão de débito
      * @param $number_card
      * @return $this
      */
-    public function setCreditCardNumber($number_card)
+    public function setDebitCardNumber($number_card)
     {
-        $this->payload['cards'][0]['card']['number'] = str_replace(" ", "", $number_card);
+        $this->payload['debitCard']['number'] = str_replace(" ", "", $number_card);
 
         return $this;
     }
@@ -86,7 +73,7 @@ class CreditCard
      */
     public function setHolderName($holder_name)
     {
-        $this->payload['cards'][0]['card']['holderName'] = $holder_name;
+        $this->payload['debitCard']['holderName'] = $holder_name;
 
         return $this;
     }
@@ -98,7 +85,7 @@ class CreditCard
      */
     public function setExpMonth($exp_month)
     {
-        $this->payload['cards'][0]['card']['expirationMonth'] = $exp_month;
+        $this->payload['debitCard']['expirationMonth'] = $exp_month;
 
         return $this;
     }
@@ -110,7 +97,7 @@ class CreditCard
      */
     public function setExpYear($exp_year)
     {
-        $this->payload['cards'][0]['card']['expirationYear'] = $exp_year;
+        $this->payload['debitCard']['expirationYear'] = $exp_year;
 
         return $this;
     }
@@ -122,7 +109,7 @@ class CreditCard
      */
     public function setSecurityCode($security_code)
     {
-        $this->payload['cards'][0]['card']['cvv'] = $security_code;
+        $this->payload['debitCard']['cvv'] = $security_code;
 
         return $this;
     }
@@ -152,7 +139,19 @@ class CreditCard
     }
 
     /**
-     * Efetua cobrança no cartão de crédito
+     * URL de retorno após o pagamento
+     * @param $return_url
+     * @return $this
+     */
+    public function setReturnURL($return_url)
+    {
+        $this->payload['debitCard']['returnUrl'] = $return_url;
+
+        return $this;
+    }
+
+    /**
+     * Efetua cobrança no cartão de débito
      * @return array
      */
     public function pay()
@@ -164,7 +163,8 @@ class CreditCard
         if(isset($response_api->transactionId)) {
             return [
                 'approved' => true,
-                'transaction_id' => $response_api->transactionId
+                'transaction_id' => $response_api->transactionId,
+                'redirect_to' => $response_api->url
             ];
         }
 
