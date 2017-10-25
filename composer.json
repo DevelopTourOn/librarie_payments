@@ -1,0 +1,17 @@
+{
+  "name": "tourchannel/payments",
+  "description": "Barramento de pagamentos do TourChannel",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Ataides Rodrigues",
+      "email": "ataides@plincturismo.com.br"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "TourChannel\\Payments\\": "src/"
+    }
+  },
+  "require": {}
+}
