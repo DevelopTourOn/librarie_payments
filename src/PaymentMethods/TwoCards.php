@@ -2,15 +2,17 @@
 
 use Illuminate\Http\Request;
 use TourChannel\Payments\Service\RequestConnect;
-use TourChannel\Payments\Service\ShopCart;
+use TourChannel\Payments\Traits\ShopCart;
 
 /**
  * Método de pagamento para dois cartões
  * Class TwoCards
  * @package TourChannel\Payments\PaymentMethods
  */
-class TwoCards extends ShopCart
+class TwoCards
 {
+    use ShopCart;
+
     /** PATH da URl na API */
     const _PATH = '/pay/two_cards';
 

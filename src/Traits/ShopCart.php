@@ -1,18 +1,12 @@
-<?php namespace TourChannel\Payments\Service;
+<?php namespace TourChannel\Payments\Traits;
 
 /**
- * Classe para as métodos de pagamento que deve passar os serviços junto
- * Class ShopCart
+ * Lista de serviço comprados junto com a compra
+ * Trait ShopCart
  * @package TourChannel\Payments\Service
  */
-abstract class ShopCart
+trait ShopCart
 {
-    /**
-     * Acesso ao payload da classe
-     * @var array
-     */
-    protected $payload = [];
-
     /**
      * Função que adiciona o item junto ao payload
      * @param string $description

@@ -4,6 +4,7 @@ use TourChannel\Payments\PaymentMethods\CreditCard;
 use TourChannel\Payments\PaymentMethods\DebitCard;
 use TourChannel\Payments\PaymentMethods\Ticket;
 use TourChannel\Payments\PaymentMethods\TwoCards;
+use TourChannel\Payments\Traits\PaymentInquiry;
 
 /**
  * Classe para os métodos de pagamento
@@ -12,6 +13,8 @@ use TourChannel\Payments\PaymentMethods\TwoCards;
  */
 class TourChannelPayments
 {
+    use PaymentInquiry;
+
     /**
      * Pagamento com cartão
      * @return CreditCard
