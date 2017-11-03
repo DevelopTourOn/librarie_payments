@@ -25,7 +25,11 @@ class RequestConnect
         curl_setopt_array($curl, [
             CURLOPT_URL => self::URL_BASE_API . $path,
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT => 60,
             CURLOPT_CUSTOMREQUEST => $method,
+            CURLOPT_CAINFO => __DIR__ . "../Certificate/cacert.pem",
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => [
                 "cache-control: no-cache",
@@ -56,9 +60,11 @@ class RequestConnect
         curl_setopt_array($curl, [
             CURLOPT_URL => self::URL_BASE_API . $path,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => "",
             CURLOPT_TIMEOUT => 60,
             CURLOPT_CUSTOMREQUEST => $method,
+            CURLOPT_CAINFO => __DIR__ . "../Certificate/cacert.pem",
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => [
                 "cache-control: no-cache",
