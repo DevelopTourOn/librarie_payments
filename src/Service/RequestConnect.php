@@ -27,8 +27,8 @@ class RequestConnect
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 60,
             CURLOPT_CUSTOMREQUEST => $method,
-            CURLOPT_CAINFO => __DIR__ . "../Certificate/cacert.pem",
-            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_CAINFO => __DIR__ . "../Certificate/ca-certificates.crt",
+            CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => [
@@ -62,8 +62,8 @@ class RequestConnect
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 60,
             CURLOPT_CUSTOMREQUEST => $method,
-            CURLOPT_CAINFO => __DIR__ . "../Certificate/cacert.pem",
-            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_CAINFO => __DIR__ . "../Certificate/ca-certificates.crt",
+            CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => [
