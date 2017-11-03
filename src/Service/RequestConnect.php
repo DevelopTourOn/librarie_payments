@@ -23,13 +23,14 @@ class RequestConnect
         $curl = curl_init();
 
         curl_setopt_array($curl, [
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS => 10,
             CURLOPT_URL => self::URL_BASE_API . $path,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 60,
+            CURLOPT_TIMEOUT => 30,
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_CAINFO => __DIR__ . "../Certificate/ca-certificates.crt",
             CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => [
                 "cache-control: no-cache",
@@ -58,13 +59,14 @@ class RequestConnect
         $curl = curl_init();
 
         curl_setopt_array($curl, [
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_MAXREDIRS => 10,
             CURLOPT_URL => self::URL_BASE_API . $path,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_TIMEOUT => 60,
+            CURLOPT_TIMEOUT => 30,
             CURLOPT_CUSTOMREQUEST => $method,
             CURLOPT_CAINFO => __DIR__ . "../Certificate/ca-certificates.crt",
             CURLOPT_SSL_VERIFYPEER => true,
-            CURLOPT_SSL_VERIFYHOST => 2,
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => [
                 "cache-control: no-cache",
