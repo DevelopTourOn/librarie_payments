@@ -29,7 +29,6 @@ class RequestConnect
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_CUSTOMREQUEST => $method,
-            CURLOPT_CAINFO => __DIR__ . "../Certificate/ca-certificates.crt",
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => [
@@ -65,7 +64,6 @@ class RequestConnect
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_CUSTOMREQUEST => $method,
-            CURLOPT_CAINFO => __DIR__ . "../Certificate/ca-certificates.crt",
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => [
