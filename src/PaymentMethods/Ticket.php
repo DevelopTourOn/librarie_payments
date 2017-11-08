@@ -171,6 +171,7 @@ class Ticket
             return [
                 'approved' => true,
                 'transaction_id' => $response_api->transactionId,
+                'barcode' => $response_api->barcode,
                 'boleto_url' => $response_api->url
             ];
         }
