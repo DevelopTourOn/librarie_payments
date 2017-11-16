@@ -180,7 +180,7 @@ class Ticket
         // Caso falhe a transação
         return [
             'approved' => false,
-            'erro' => $response_api->message
+            'erro' => $response_api->message ?? "Não foi possível gerar o boleto, tente novamente!"
         ];
     }
 

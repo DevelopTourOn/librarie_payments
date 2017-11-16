@@ -172,7 +172,7 @@ class CreditCard
         // Caso falhe a transação
         return [
             'approved' => false,
-            'erro' => $response_api->message
+            'erro' => $response_api->message ?? "Dados do cartão inválido!"
         ];
     }
 
