@@ -6,7 +6,7 @@
  */
 abstract class StatusTransactionEnum
 {
-    const PAGO = "pay";
+    const PAGO = "paid";
 
     const PENDENTE = "pending";
 
