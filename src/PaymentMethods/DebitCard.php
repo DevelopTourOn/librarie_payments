@@ -1,6 +1,7 @@
 <?php namespace TourChannel\Payments\PaymentMethods;
 
 use Illuminate\Http\Request;
+use TourChannel\Payments\Enum\StatusTransactionEnum;
 use TourChannel\Payments\Service\RequestConnect;
 
 /**
@@ -160,7 +161,7 @@ class DebitCard
         $response_api = $this->chargeOnCard();
 
         // Verifica se deu certo
-        if(isset($response_api->transactionId)) {
+        if($response_api->status == StatusTransactionEnum::PAGO) {
             return [
                 'approved' => true,
                 'transaction_id' => $response_api->transactionId,

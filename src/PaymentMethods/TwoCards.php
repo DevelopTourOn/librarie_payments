@@ -1,6 +1,7 @@
 <?php namespace TourChannel\Payments\PaymentMethods;
 
 use Illuminate\Http\Request;
+use TourChannel\Payments\Enum\StatusTransactionEnum;
 use TourChannel\Payments\Service\RequestConnect;
 use TourChannel\Payments\Traits\ShopCart;
 
@@ -276,7 +277,7 @@ class TwoCards
         $response_api = $this->chargeOnCards();
 
         // Verifica se deu certo
-        if(isset($response_api->transactionId)) {
+        if($response_api->status == StatusTransactionEnum::PAGO) {
             return [
                 'approved' => true,
                 'transaction_id' => $response_api->transactionId
