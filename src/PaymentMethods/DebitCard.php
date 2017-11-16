@@ -161,7 +161,7 @@ class DebitCard
         $response_api = $this->chargeOnCard();
 
         // Verifica se deu certo
-        if($response_api->status == StatusTransactionEnum::PAGO) {
+        if($response_api->status == StatusTransactionEnum::PENDENTE) {
             return [
                 'approved' => true,
                 'transaction_id' => $response_api->transactionId,
