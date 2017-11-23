@@ -8,7 +8,7 @@
 class EventTypeEnum
 {
     /** Notificação de quando o boleto foi pago */
-    const BOLETO_PAGO = "ticket_paid ";
+    const BOLETO_PAGO = "ticket_paid";
 
     /** Notificação de quando o boleto foi cancelado */
     const BOLETO_CANCELADO = "canceled_ticket";
