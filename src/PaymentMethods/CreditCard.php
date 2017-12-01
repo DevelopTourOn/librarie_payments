@@ -165,7 +165,8 @@ class CreditCard
         if($response_api->status == StatusTransactionEnum::PAGO) {
             return [
                 'approved' => true,
-                'transaction_id' => $response_api->transactionId
+                'transaction_id' => $response_api->transactionId,
+                'response' => $response_api
             ];
         }
 

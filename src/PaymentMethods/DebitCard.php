@@ -165,7 +165,8 @@ class DebitCard
             return [
                 'approved' => true,
                 'transaction_id' => $response_api->transactionId,
-                'redirect_to' => $response_api->url
+                'redirect_to' => $response_api->url,
+                'response' => $response_api
             ];
         }
 
