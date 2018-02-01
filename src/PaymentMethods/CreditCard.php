@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use TourChannel\Payments\Enum\StatusTransactionEnum;
 use TourChannel\Payments\Service\RequestConnect;
+use TourChannel\Payments\Traits\Customer;
+use TourChannel\Payments\Traits\ShopCart;
 
 /**
  * Class CreditCard
@@ -10,6 +12,9 @@ use TourChannel\Payments\Service\RequestConnect;
  */
 class CreditCard
 {
+    /** Dados do cliente e do carrinho */
+    use ShopCart, Customer;
+
     /** PATH da URl na API */
     const _PATH = '/pay/card';
 
@@ -29,7 +34,7 @@ class CreditCard
                 'expirationYear' => 0,
                 'cvv' => ''
             ]
-        ]], 'customer' => [ 'name' => '', 'email' => '' ]
+        ]]
     ];
 
     /**
@@ -124,30 +129,6 @@ class CreditCard
     public function setSecurityCode($security_code)
     {
         $this->payload['cards'][0]['card']['cvv'] = $security_code;
-
-        return $this;
-    }
-
-    /**
-     * Nome do cliente
-     * @param $name
-     * @return $this
-     */
-    public function setCustomerName($name)
-    {
-        $this->payload['customer']['name'] = $name;
-
-        return $this;
-    }
-
-    /**
-     * Email do cliente
-     * @param $email
-     * @return $this
-     */
-    public function setCustomerEmail($email)
-    {
-        $this->payload['customer']['email'] = $email;
 
         return $this;
     }

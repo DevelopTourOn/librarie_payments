@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use TourChannel\Payments\Enum\StatusTransactionEnum;
 use TourChannel\Payments\Service\RequestConnect;
+use TourChannel\Payments\Traits\Customer;
+use TourChannel\Payments\Traits\ShopCart;
 
 /**
  * Método de pagamento via Boleto
@@ -11,6 +13,9 @@ use TourChannel\Payments\Service\RequestConnect;
  */
 class Ticket
 {
+    /** Dados do cliente e do carrinho */
+    use ShopCart, Customer;
+
     /** PATH da URl na API */
     const _PATH = '/pay/ticket';
 
@@ -24,18 +29,6 @@ class Ticket
     protected $payload = [
         'order' => '',
         'amount' => 0,
-        'customer' => [
-            'name' => '',
-            'email' => '',
-            'address' => [
-                'street' => '',
-                'number' => '',
-                'zipCode' => '',
-                'neighborhood' => '',
-                'city' => '',
-                'state' => ''
-            ]
-        ]
     ];
 
     /**
@@ -58,102 +51,6 @@ class Ticket
     public function setAmount($valor)
     {
         $this->payload['amount'] = $valor;
-
-        return $this;
-    }
-
-    /**
-     * Nome do cliente que ira o boleto
-     * @param $name_customer
-     * @return $this
-     */
-    public function setCustomerName($name_customer)
-    {
-        $this->payload['customer']['name'] = $name_customer;
-
-        return $this;
-    }
-
-    /**
-     * E-mail do cliente para o boleto
-     * @param $email_customer
-     * @return $this
-     */
-    public function setCustomerEmail($email_customer)
-    {
-        $this->payload['customer']['email'] = $email_customer;
-
-        return $this;
-    }
-
-    /**
-     * Endereço para boleto registrado
-     * @param $endereco
-     * @return $this
-     */
-    public function setAddressStreet($endereco)
-    {
-        $this->payload['customer']['address']['street'] = $endereco;
-
-        return $this;
-    }
-
-    /**
-     * Número do endereço do cliente
-     * @param $numero_address
-     * @return $this
-     */
-    public function setAddressNumber($numero_address)
-    {
-        $this->payload['customer']['address']['number'] = $numero_address;
-
-        return $this;
-    }
-
-    /**
-     * CEP do endereço do cliente
-     * @param $zip_code
-     * @return $this
-     */
-    public function setAddressZipCode($zip_code)
-    {
-        $this->payload['customer']['address']['zipCode'] = str_replace( '-', '', $zip_code);
-
-        return $this;
-    }
-
-    /**
-     * Bairro do endereço do cliente
-     * @param $bairro
-     * @return $this
-     */
-    public function setAddressNeighborhood($bairro)
-    {
-        $this->payload['customer']['address']['neighborhood'] = $bairro;
-
-        return $this;
-    }
-
-    /**
-     * Cidade do cliente
-     * @param $cidade
-     * @return $this
-     */
-    public function setAddressCity($cidade)
-    {
-        $this->payload['customer']['address']['city'] = $cidade;
-
-        return $this;
-    }
-
-    /**
-     * Estado do cliente
-     * @param $estado
-     * @return $this
-     */
-    public function setAddressState($estado)
-    {
-        $this->payload['customer']['address']['state'] = $estado;
 
         return $this;
     }
