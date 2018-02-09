@@ -27,6 +27,7 @@ class CreditCard
         'amount' => 0,
         'cards' => [[
             'installments' => 0,
+            'amount' => 0,
             'card' => [
                 'number' => '',
                 'holderName' => '',
@@ -56,7 +57,10 @@ class CreditCard
      */
     public function setAmount($valor)
     {
+        // Valor da compra
         $this->payload['amount'] = $valor;
+        // Valor do cartão = valor da compra
+        $this->payload['cards'][0]['amount'] = $valor;
 
         return $this;
     }

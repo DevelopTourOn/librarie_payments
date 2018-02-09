@@ -1,4 +1,5 @@
 <?php namespace TourChannel\Payments\Traits;
+use Carbon\Carbon;
 use Exception;
 
 /**
@@ -11,7 +12,7 @@ trait Customer
      * Genero aceitos
      * @var array
      */
-    protected $genre = ['M', 'F'];
+    protected $genre = ['M' => 'male', 'F' => 'female'];
 
     /**
      * Nome do cliente
@@ -45,6 +46,7 @@ trait Customer
     public function setCustomerDocument($document)
     {
         $this->payload['customer']['document'] = preg_replace("/[^0-9]/", "", $document);
+        $this->payload['customer']['type_document'] = "CPF";
 
         return $this;
     }
@@ -57,24 +59,29 @@ trait Customer
      */
     public function setCustomerGender(string $gender)
     {
-        if(in_array($gender, $this->genre)) {
+        $gender = strtoupper($gender);
 
-            $this->payload['customer']['gender'] = $gender;
+        if(isset($this->genre[$gender])) {
+
+            $this->payload['customer']['gender'] = $this->genre[$gender];
 
             return $this;
         }
 
-        throw new Exception('Genero não especificado, somente '. implode(" ou ", $this->genre));
+        throw new Exception('Genero não especificado, somente '. implode(" ou ", array_keys($this->genre)));
     }
 
     /**
      * Data de nascimento cliente
      * @param string $birthdate
+     * @param string $format
      * @return $this
      */
-    public function setCustomerBirthDate(string $birthdate)
+    public function setCustomerBirthDate(string $birthdate, $format = 'd/m/Y')
     {
-        $this->payload['customer']['birthdate'] = $birthdate;
+        $birthdate = Carbon::createFromFormat($format, $birthdate);
+
+        $this->payload['customer']['birthdate'] = $birthdate->format('Y-m-d');
 
         return $this;
     }
@@ -185,6 +192,30 @@ trait Customer
     public function setCustomerCountry(string $country = 'BR')
     {
         $this->payload['customer']['address']['country'] = $country;
+
+        return $this;
+    }
+
+    /**
+     * IP do cliente
+     * @param $ip
+     * @return $this
+     */
+    public function setCustomerIp($ip)
+    {
+        $this->payload['ip'] = $ip;
+
+        return $this;
+    }
+
+    /**
+     * Plataforma de compra do cliente
+     * @param string $platform
+     * @return $this
+     */
+    public function setCustomerPlatform(string $platform)
+    {
+        $this->payload['device']['platform'] = $platform;
 
         return $this;
     }
