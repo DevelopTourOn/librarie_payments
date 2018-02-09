@@ -94,7 +94,7 @@ trait Customer
     public function setCustomerPhones(array $phones)
     {
         $mobile_phone = preg_replace("/[^0-9]/", "", $phones[0]);
-        $home_phone = preg_replace("/[^0-9]/", "", $phones[1] ?? $mobile_phone);
+        $home_phone = (! isset($phones[1]) || $phones[1] == "") ? $mobile_phone : preg_replace("/[^0-9]/", "", $phones[1]);
 
         $this->payload['customer']['phones'] = [
             'mobile_phone' => [
