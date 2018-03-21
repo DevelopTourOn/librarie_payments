@@ -262,6 +262,14 @@ class TwoCards
             ];
         }
 
+        // Verifica se algum dos dois cartoes falhou
+        if($response_api->status == StatusTransactionEnum::CANCELADO) {
+            return [
+                'approved' => false,
+                'erro' => "Pagamento não autorizado em algum dos dois cartões"
+            ];
+        }
+
         // Caso falhe a transação
         return [
             'approved' => false,
