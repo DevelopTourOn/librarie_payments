@@ -81,6 +81,16 @@ trait Customer
     {
         $birthdate = Carbon::createFromFormat($format, $birthdate);
 
+        // Caso a data seja maior que 100 anos provavelmente foi colocado errado
+        if($birthdate->diffInYears() >= 100) {
+
+            // Recupera a ano informado
+            $year = (string) $birthdate->year;
+
+            // Coloca 19 e concatena os ultimos dois anos
+            $birthdate->year('19' . $year{2} . $year{3});
+        }
+
         $this->payload['customer']['birthdate'] = $birthdate->format('Y-m-d');
 
         return $this;

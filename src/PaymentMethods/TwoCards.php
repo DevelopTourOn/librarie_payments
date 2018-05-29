@@ -273,7 +273,7 @@ class TwoCards
         // Caso falhe a transação
         return [
             'approved' => false,
-            'erro' => $response_api->message ?? "Dados do cartão inválido!"
+            'erro' => $response_api->message ?? "Não foi possível efetuar o pagamento!"
         ];
     }
 
