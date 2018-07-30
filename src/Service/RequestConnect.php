@@ -6,10 +6,19 @@
  */
 class RequestConnect
 {
+
+
     /**
      * Url base da API de pagamentos
      */
     const URL_BASE_API = 'https://pagamentos.tourchannel.com.br/api/v1';
+
+    static function get_endpoint() {
+
+        $endpoint =  env('TOURCHANNEL_PAYMENT_ENDPOINT', self::URL_BASE_API);
+        // dd($endpoint);
+        return $endpoint;
+    }
 
     /**
      * Curl para autenticação na API
@@ -25,7 +34,7 @@ class RequestConnect
         curl_setopt_array($curl, [
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_URL => self::URL_BASE_API . $path,
+            CURLOPT_URL => self::get_endpoint() . $path,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_CUSTOMREQUEST => $method,
@@ -64,7 +73,7 @@ class RequestConnect
         curl_setopt_array($curl, [
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_URL => self::URL_BASE_API . $path,
+            CURLOPT_URL => self::get_endpoint() . $path,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 30,
             CURLOPT_CUSTOMREQUEST => $method,
