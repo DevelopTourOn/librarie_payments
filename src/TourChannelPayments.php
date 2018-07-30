@@ -6,6 +6,9 @@ use TourChannel\Payments\PaymentMethods\Ticket;
 use TourChannel\Payments\PaymentMethods\TwoCards;
 use TourChannel\Payments\Traits\PaymentInquiry;
 
+use TourChannel\Payments\Service\Authentication;
+use TourChannel\Payments\Service\RequestConnect;
+use Symfony\Component\HttpFoundation\Request;
 /**
  * Classe para os métodos de pagamento
  * Class TourChannelPayments
@@ -14,6 +17,14 @@ use TourChannel\Payments\Traits\PaymentInquiry;
 class TourChannelPayments
 {
     use PaymentInquiry;
+
+
+    public function __construct(string $user = "", string $password = "")
+    {
+        Authentication::setUser($user);
+        Authentication::setPassword($password);
+
+    }
 
     /**
      * Pagamento com cartão

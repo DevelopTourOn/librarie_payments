@@ -33,6 +33,9 @@ class Authentication
      */
     const _PATH = '/authentication';
 
+    static public function getNameToken() {
+        return self::TOKEN_CACHE . "-" . self::$user;
+    }
     /**
      * Recupera o token de autenticação no Cache
      * Caso não tenha gera um novo token e coloca no cache
@@ -40,14 +43,28 @@ class Authentication
      */
     static public function getToken()
     {
-        // Verifica os dados de acesso
-        self::verifyCredentials();
+
+        if(empty(self::$user) || empty(self::$password)) {
+            // Verifica os dados de acesso
+            self::verifyCredentials();
+        }
 
         // Recupera o token no cache
-        $token_cache = Cache::get(self::TOKEN_CACHE, null);
+        $token_cache = Cache::get(self::getNameToken(), null);
 
         // Caso não tenha o token gera um novo token
         return $token_cache ?? self::getNewToken();
+    }
+
+    static public function setUser($user = null)
+    {
+        self::$user = $user;
+    }
+
+
+    static public function setPassword($password = null)
+    {
+        self::$password = $password;
     }
 
     /**
@@ -56,12 +73,14 @@ class Authentication
      */
     static public function verifyCredentials()
     {
+
+
         $user = env('TOURCHANNEL_PAYMENT_USER');
         $password = env('TOURCHANNEL_PAYMENT_PASSWORD');
 
         // Verifica se a configuração existe no ENV
         if($user == "" || $password == "") {
-            throw new \Exception('Usário ou senha para acesso a API não está configurado no .ENV');
+            throw new \Exception('Usuário ou senha para acesso a API não está configurado no .ENV');
         } else {
             // Configura o usuário
             self::$user = $user;
@@ -79,11 +98,14 @@ class Authentication
         // Token devolvido pela API
         $token_access = self::authenticate();
 
+        if(isset($token_access->status) && $token_access->status == "error"){
+            throw new \Exception($token_access->message);
+        }
         // Tempo para expirar o token -1 hora do que retornado na API
         $expires_at = Carbon::parse($token_access->credentials->token_expiration)->subHours(1);
 
         // Coloca o token em cache
-        Cache::put(self::TOKEN_CACHE, $token_access->credentials->token, $expires_at);
+        Cache::put(self::getNameToken(), $token_access->credentials->token, $expires_at);
 
         return $token_access->credentials->token;
     }
@@ -102,5 +124,6 @@ class Authentication
             'user' => self::$user,
             'password' => self::$password,
         ]);
+
     }
 }
